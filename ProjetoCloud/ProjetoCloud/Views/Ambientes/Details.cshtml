@@ -1,0 +1,37 @@
+﻿@model ProjetoCloud.Models.Ambiente
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ambiente</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome_Ambiente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome_Ambiente)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Cadastro_Ambiente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Data_Cadastro_Ambiente)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Qtda_Dispositivo_Ambiente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Qtda_Dispositivo_Ambiente)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id_Ambiente">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ProjetoCloud.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome_Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data_Cadastro_Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CPF_Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cartao_Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CEP_Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email_Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Senha_Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adm_Usuario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome_Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data_Cadastro_Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CPF_Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cartao_Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CEP_Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email_Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Senha_Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adm_Usuario)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id_Usuario">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id_Usuario">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id_Usuario">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
