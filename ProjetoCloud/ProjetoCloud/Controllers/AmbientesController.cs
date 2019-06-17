@@ -53,10 +53,13 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_Ambiente,Nome_Ambiente,Data_Cadastro_Ambiente,Qtda_Dispositivo_Ambiente")] Ambiente ambiente)
+        public async Task<IActionResult> Create([Bind("Id_Ambiente,Nome_Ambiente")] Ambiente ambiente)
         {
             if (ModelState.IsValid)
             {
+                ambiente.Data_Cadastro_Ambiente = DateTime.Now;
+                ambiente.Qtda_Dispositivo_Ambiente = 0 ;
+
                 _context.Add(ambiente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -85,7 +88,7 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_Ambiente,Nome_Ambiente,Data_Cadastro_Ambiente,Qtda_Dispositivo_Ambiente")] Ambiente ambiente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_Ambiente,Nome_Ambiente,Qtda_Dispositivo_Ambiente")] Ambiente ambiente)
         {
             if (id != ambiente.Id_Ambiente)
             {
@@ -96,6 +99,7 @@ namespace ProjetoCloud.Controllers
             {
                 try
                 {
+                    ambiente.Data_Cadastro_Ambiente = DateTime.Now;
                     _context.Update(ambiente);
                     await _context.SaveChangesAsync();
                 }

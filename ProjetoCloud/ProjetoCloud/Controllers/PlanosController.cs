@@ -53,10 +53,11 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_Plano,Nome_Plano,Valor_Plano,Data_Cadastro_Plano,Qtde_Max_Dispositivos_Plano")] Plano plano)
+        public async Task<IActionResult> Create([Bind("Id_Plano,Nome_Plano,Valor_Plano,Qtde_Max_Dispositivos_Plano")] Plano plano)
         {
             if (ModelState.IsValid)
             {
+                plano.Data_Cadastro_Plano = DateTime.Now;
                 _context.Add(plano);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -85,7 +86,7 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_Plano,Nome_Plano,Valor_Plano,Data_Cadastro_Plano,Qtde_Max_Dispositivos_Plano")] Plano plano)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_Plano,Nome_Plano,Valor_Plano,Qtde_Max_Dispositivos_Plano")] Plano plano)
         {
             if (id != plano.Id_Plano)
             {
@@ -96,6 +97,7 @@ namespace ProjetoCloud.Controllers
             {
                 try
                 {
+                    plano.Data_Cadastro_Plano = DateTime.Now;
                     _context.Update(plano);
                     await _context.SaveChangesAsync();
                 }

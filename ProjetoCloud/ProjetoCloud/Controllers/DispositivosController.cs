@@ -53,10 +53,11 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_Dispositivo,Nome_Dispositivo,Data_Cadastro_Dispositivo,Status_Dispositivo")] Dispositivo dispositivo)
+        public async Task<IActionResult> Create([Bind("Id_Dispositivo,Nome_Dispositivo,Status_Dispositivo")] Dispositivo dispositivo)
         {
             if (ModelState.IsValid)
             {
+                dispositivo.Data_Cadastro_Dispositivo = DateTime.Now;
                 _context.Add(dispositivo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -85,7 +86,7 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_Dispositivo,Nome_Dispositivo,Data_Cadastro_Dispositivo,Status_Dispositivo")] Dispositivo dispositivo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_Dispositivo,Nome_Dispositivo,Status_Dispositivo")] Dispositivo dispositivo)
         {
             if (id != dispositivo.Id_Dispositivo)
             {
@@ -96,6 +97,7 @@ namespace ProjetoCloud.Controllers
             {
                 try
                 {
+                    dispositivo.Data_Cadastro_Dispositivo = DateTime.Now;
                     _context.Update(dispositivo);
                     await _context.SaveChangesAsync();
                 }
