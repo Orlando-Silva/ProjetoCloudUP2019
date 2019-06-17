@@ -5,11 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Lista de Usuários</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -27,12 +24,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CEP_Usuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email_Usuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Senha_Usuario)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Adm_Usuario)
@@ -57,12 +48,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CEP_Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email_Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Senha_Usuario)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Adm_Usuario)

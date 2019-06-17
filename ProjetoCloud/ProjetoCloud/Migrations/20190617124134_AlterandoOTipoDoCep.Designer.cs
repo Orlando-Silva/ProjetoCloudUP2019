@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoCloud.Models;
 
 namespace ProjetoCloud.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20190617124134_AlterandoOTipoDoCep")]
+    partial class AlterandoOTipoDoCep
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,11 +54,11 @@ namespace ProjetoCloud.Migrations
 
                     b.Property<string>("UserName");
 
-                    b.Property<int>("UsuarioDeAplicacaoId");
+                    b.Property<int>("UsuarioId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioDeAplicacaoId")
+                    b.HasIndex("UsuarioId")
                         .IsUnique();
 
                     b.ToTable("ProjetoCloudUser");
@@ -143,8 +145,6 @@ namespace ProjetoCloud.Migrations
 
                     b.Property<int?>("Plano_UsuarioId_Plano");
 
-                    b.Property<int>("UsuarioDeAutenticacaoId");
-
                     b.HasKey("Id_Usuario");
 
                     b.HasIndex("Plano_UsuarioId_Plano");
@@ -156,7 +156,7 @@ namespace ProjetoCloud.Migrations
                 {
                     b.HasOne("ProjetoCloud.Models.Usuario", "UsuarioDeAplicacao")
                         .WithOne("UsuarioDeAutenticacao")
-                        .HasForeignKey("ProjetoCloud.Areas.Identity.Data.ProjetoCloudUser", "UsuarioDeAplicacaoId")
+                        .HasForeignKey("ProjetoCloud.Areas.Identity.Data.ProjetoCloudUser", "UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

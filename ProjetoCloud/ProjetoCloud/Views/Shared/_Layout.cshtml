@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjetoCloud.Areas.Identity.Data
+@inject SignInManager<ProjetoCloudUser> SignInManager
+@inject UserManager<ProjetoCloudUser> UserManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -30,11 +35,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Usuarios" asp-action="Index">Usuários</a></li>
+                    @if (SignInManager.IsSignedIn(User) && UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.UsuarioDeAplicacao.Adm_Usuario)
+                    {
+                        <li><a asp-area="" asp-controller="Usuarios" asp-action="Index">Usuários</a></li>
+                    }
                     <li><a asp-area="" asp-controller="Planos" asp-action="Index">Planos</a></li>
                     <li><a asp-area="" asp-controller="Ambientes" asp-action="Index">Ambientes</a></li>
                     <li><a asp-area="" asp-controller="Dispositivos" asp-action="Index">Dispositivos</a></li>
                 </ul>
+                <partial name="_LoginPartial" />
             </div>
         </div>
     </nav>

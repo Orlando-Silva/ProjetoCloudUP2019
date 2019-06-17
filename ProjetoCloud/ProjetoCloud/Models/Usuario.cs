@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjetoCloud.Areas.Identity.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,16 +20,17 @@ namespace ProjetoCloud.Models
 
         public string Cartao_Usuario { get; set; }
 
-        public int CEP_Usuario { get; set; }
+        public string CEP_Usuario { get; set; }
 
-        public string Email_Usuario { get; set; }
-
-        public string Senha_Usuario { get; set; }
-
-        public Boolean Adm_Usuario { get; set; }
+        public bool Adm_Usuario { get; set; }
 
         public Plano Plano_Usuario { get; set; }
 
         public List<Ambiente> Ambientes_Usuario { get; set; }
+
+        public ProjetoCloudUser UsuarioDeAutenticacao { get; set; }
+
+        public int UsuarioDeAutenticacaoId { get; set; }
+
     }
 }

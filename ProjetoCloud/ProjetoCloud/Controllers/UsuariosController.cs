@@ -2,16 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ProjetoCloud.Areas.Identity.Data;
 using ProjetoCloud.Models;
 
 namespace ProjetoCloud.Controllers
 {
+    [Authorize]
     public class UsuariosController : Controller
     {
         private readonly Contexto _context;
+
+        private readonly UserManager<ProjetoCloudUser> _userManager;
+
+        private Task<ProjetoCloudUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
 
         public UsuariosController(Contexto context)
         {
@@ -21,7 +30,14 @@ namespace ProjetoCloud.Controllers
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Usuarios.ToListAsync());
+            if (GetCurrentUserAsync().Result?.UsuarioDeAplicacao?.Adm_Usuario is bool admin && admin)
+            {
+                return View(await _context.Usuarios.ToListAsync());
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
 
         // GET: Usuarios/Details/5

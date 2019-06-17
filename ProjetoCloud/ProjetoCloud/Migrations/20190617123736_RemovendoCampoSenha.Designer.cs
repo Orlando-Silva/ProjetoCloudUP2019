@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoCloud.Models;
 
 namespace ProjetoCloud.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20190617123736_RemovendoCampoSenha")]
+    partial class RemovendoCampoSenha
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,11 +54,11 @@ namespace ProjetoCloud.Migrations
 
                     b.Property<string>("UserName");
 
-                    b.Property<int>("UsuarioDeAplicacaoId");
+                    b.Property<int>("UsuarioId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioDeAplicacaoId")
+                    b.HasIndex("UsuarioId")
                         .IsUnique();
 
                     b.ToTable("ProjetoCloudUser");
@@ -131,7 +133,7 @@ namespace ProjetoCloud.Migrations
 
                     b.Property<bool>("Adm_Usuario");
 
-                    b.Property<string>("CEP_Usuario");
+                    b.Property<int>("CEP_Usuario");
 
                     b.Property<string>("CPF_Usuario");
 
@@ -142,8 +144,6 @@ namespace ProjetoCloud.Migrations
                     b.Property<string>("Nome_Usuario");
 
                     b.Property<int?>("Plano_UsuarioId_Plano");
-
-                    b.Property<int>("UsuarioDeAutenticacaoId");
 
                     b.HasKey("Id_Usuario");
 
@@ -156,7 +156,7 @@ namespace ProjetoCloud.Migrations
                 {
                     b.HasOne("ProjetoCloud.Models.Usuario", "UsuarioDeAplicacao")
                         .WithOne("UsuarioDeAutenticacao")
-                        .HasForeignKey("ProjetoCloud.Areas.Identity.Data.ProjetoCloudUser", "UsuarioDeAplicacaoId")
+                        .HasForeignKey("ProjetoCloud.Areas.Identity.Data.ProjetoCloudUser", "UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
