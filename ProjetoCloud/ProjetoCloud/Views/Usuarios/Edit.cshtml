@@ -1,4 +1,4 @@
-﻿@model ProjetoCloud.Models.Usuario
+﻿@model DAL.Entidades.Usuario
 
 @{
     ViewData["Title"] = "Edit";
@@ -20,10 +20,10 @@
                 <span asp-validation-for="Nome_Usuario" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="Data_Cadastro_Usuario" class="control-label"></label>
-                <input asp-for="Data_Cadastro_Usuario" class="form-control" />
-                <span asp-validation-for="Data_Cadastro_Usuario" class="text-danger"></span>
-            </div>*@
+            <label asp-for="Data_Cadastro_Usuario" class="control-label"></label>
+            <input asp-for="Data_Cadastro_Usuario" class="form-control" />
+            <span asp-validation-for="Data_Cadastro_Usuario" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <label asp-for="CPF_Usuario" class="control-label"></label>
                 <input asp-for="CPF_Usuario" class="form-control" />
@@ -38,13 +38,6 @@
                 <label asp-for="CEP_Usuario" class="control-label"></label>
                 <input asp-for="CEP_Usuario" class="form-control" />
                 <span asp-validation-for="CEP_Usuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Adm_Usuario" /> @Html.DisplayNameFor(model => model.Adm_Usuario)
-                    </label>
-                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

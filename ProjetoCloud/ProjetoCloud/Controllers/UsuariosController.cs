@@ -1,28 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Contexto;
+using DAL.Entidades;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ProjetoCloud.Areas.Identity.Data;
-using ProjetoCloud.Models;
 
 namespace ProjetoCloud.Controllers
 {
     [Authorize]
     public class UsuariosController : Controller
     {
-        private readonly Contexto _context;
+        private readonly CloudContexto _context;
 
-        private readonly UserManager<ProjetoCloudUser> _userManager;
-
-        private Task<ProjetoCloudUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-
-
-        public UsuariosController(Contexto context)
+        public UsuariosController(CloudContexto context)
         {
             _context = context;
         }
@@ -30,7 +22,7 @@ namespace ProjetoCloud.Controllers
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-            if (GetCurrentUserAsync().Result?.UsuarioDeAplicacao?.Adm_Usuario is bool admin && admin)
+            if( User.HasClaim(c => c.Value == "Administrator"))
             {
                 return View(await _context.Usuarios.ToListAsync());
             }
@@ -38,6 +30,7 @@ namespace ProjetoCloud.Controllers
             {
                 return Unauthorized();
             }
+            
         }
 
         // GET: Usuarios/Details/5
@@ -102,7 +95,7 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_Usuario,Nome_Usuario,CPF_Usuario,Cartao_Usuario,CEP_Usuario,Email_Usuario,Senha_Usuario,Adm_Usuario")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_Usuario,Nome_Usuario,CPF_Usuario,Cartao_Usuario,CEP_Usuario,Email_Usuario,Senha_Usuario,Adm_Usuario")] Usuario usuario, bool Admin)
         {
             if (id != usuario.Id_Usuario)
             {

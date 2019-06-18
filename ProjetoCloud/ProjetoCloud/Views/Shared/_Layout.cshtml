@@ -35,7 +35,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (SignInManager.IsSignedIn(User) && UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.UsuarioDeAplicacao.Adm_Usuario)
+                    @if (SignInManager.IsSignedIn(User) && User.HasClaim(c => c.Value == "Administrator"))
                     {
                         <li><a asp-area="" asp-controller="Usuarios" asp-action="Index">Usuários</a></li>
                     }
