@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using DAL.Entidades;
 using ProjetoCloud.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal.ExternalLoginModel;
 
 namespace ProjetoCloud.Helpers
 {

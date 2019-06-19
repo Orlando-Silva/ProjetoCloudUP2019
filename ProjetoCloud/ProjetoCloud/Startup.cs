@@ -1,12 +1,15 @@
 ﻿using System;
 using AutoMapper;
+using DAL.Contexto;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjetoCloud.Areas.Identity.Data;
 using ProjetoCloud.Models;
 
 namespace ProjetoCloud
@@ -37,7 +40,7 @@ namespace ProjetoCloud
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddDbContext<Contexto>(options =>
+            services.AddDbContext<CloudContexto>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper();
 
@@ -45,7 +48,7 @@ namespace ProjetoCloud
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -56,7 +59,7 @@ namespace ProjetoCloud
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

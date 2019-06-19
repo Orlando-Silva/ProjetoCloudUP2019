@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Contexto;
+using DAL.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,9 +15,9 @@ namespace ProjetoCloud.Controllers
     [Authorize]
     public class PlanosController : Controller
     {
-        private readonly Contexto _context;
+        private readonly CloudContexto _context;
 
-        public PlanosController(Contexto context)
+        public PlanosController(CloudContexto context)
         {
             _context = context;
         }

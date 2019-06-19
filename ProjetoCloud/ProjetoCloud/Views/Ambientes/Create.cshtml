@@ -1,4 +1,5 @@
-﻿@model ProjetoCloud.Models.Ambiente
+﻿@model DAL.Entidades.Ambiente
+{
 
 @{
     ViewData["Title"] = "Create";
@@ -19,15 +20,15 @@
                 <span asp-validation-for="Nome_Ambiente" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="Data_Cadastro_Ambiente" class="control-label"></label>
-                <input asp-for="Data_Cadastro_Ambiente" class="form-control" />
-                <span asp-validation-for="Data_Cadastro_Ambiente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Qtda_Dispositivo_Ambiente" class="control-label"></label>
-                <input asp-for="Qtda_Dispositivo_Ambiente" class="form-control" />
-                <span asp-validation-for="Qtda_Dispositivo_Ambiente" class="text-danger"></span>
-            </div>*@
+                    <label asp-for="Data_Cadastro_Ambiente" class="control-label"></label>
+                    <input asp-for="Data_Cadastro_Ambiente" class="form-control" />
+                    <span asp-validation-for="Data_Cadastro_Ambiente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Qtda_Dispositivo_Ambiente" class="control-label"></label>
+                    <input asp-for="Qtda_Dispositivo_Ambiente" class="form-control" />
+                    <span asp-validation-for="Qtda_Dispositivo_Ambiente" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

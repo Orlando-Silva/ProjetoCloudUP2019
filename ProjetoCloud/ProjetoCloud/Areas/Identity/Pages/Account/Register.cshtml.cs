@@ -14,7 +14,10 @@ using Microsoft.Extensions.Logging;
 using ProjetoCloud.Areas.Identity.Data;
 using ProjetoCloud.Models;
 using Microsoft.Extensions.Configuration;
-
+using DAL.Entidades;
+using System.Security.Claims;
+using DAL.Contexto;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ProjetoCloud.Areas.Identity.Pages.Account
 {
@@ -27,8 +30,7 @@ namespace ProjetoCloud.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly IMapper _mapper;
         private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
-        private readonly Contexto _context;
-
+        private readonly CloudContexto _context;
 
         public RegisterModel(
             UserManager<ProjetoCloudUser> userManager,
@@ -37,7 +39,8 @@ namespace ProjetoCloud.Areas.Identity.Pages.Account
             IEmailSender emailSender,
             Microsoft.Extensions.Configuration.IConfiguration configuration,
             IMapper mapper,
-            Contexto context)
+            CloudContexto context
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -114,16 +117,19 @@ namespace ProjetoCloud.Areas.Identity.Pages.Account
                 Usuario usuario = _mapper.Map(Input, new Usuario());
                 usuario.Data_Cadastro_Usuario = DateTime.UtcNow;
                 usuario = _context.Usuarios.Add(usuario).Entity;
-                usuario.Adm_Usuario = IsAdmin();
                 _context.SaveChanges();
                 usuario = _context.Usuarios.Find(usuario.Id_Usuario);
 
-                var user = new ProjetoCloudUser { UserName = Input.Nome_Usuario, Email = Input.Email, UsuarioDeAplicacaoId  = usuario.Id_Usuario };
+                var user = new ProjetoCloudUser { UserName = Input.Nome_Usuario, Email = Input.Email, UsuarioId  = usuario.Id_Usuario };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    usuario.UsuarioDeAutenticacao = user;
-                    _context.SaveChanges();
+
+                    if (IsAdmin())
+                    {
+                        await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Administrator"));
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

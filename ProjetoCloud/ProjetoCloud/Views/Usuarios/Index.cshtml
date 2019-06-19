@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjetoCloud.Models.Usuario>
+﻿@model IEnumerable<DAL.Entidades.Usuario>
 
 @{
     ViewData["Title"] = "Index";
@@ -25,9 +25,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.CEP_Usuario)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Adm_Usuario)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -48,9 +45,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CEP_Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Adm_Usuario)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id_Usuario">Edit</a> |
