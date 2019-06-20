@@ -21,8 +21,7 @@ namespace ProjetoCloud.Models
             modelBuilder.Entity<Dispositivo>().ToTable("Dispositivo");
             modelBuilder.Entity<Plano>().ToTable("Plano");
             modelBuilder.Entity<Usuario>().ToTable("Usuario");
-            modelBuilder.Entity<Usuario>().HasOne(u => u.UsuarioDeAutenticacao)
-                                        .WithOne(pcu => pcu.UsuarioDeAplicacao);
+            modelBuilder.Entity<Usuario>().HasOne(u => u.UsuarioDeAutenticacao);
             
 
         }

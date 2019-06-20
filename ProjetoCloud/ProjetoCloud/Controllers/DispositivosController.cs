@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetoCloud.Models;
+using Dispositivo = DAL.Entidades.Dispositivo;
 
 namespace ProjetoCloud.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class DispositivosController : Controller
     {
         private readonly CloudContexto _context;

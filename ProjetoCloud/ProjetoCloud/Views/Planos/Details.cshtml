@@ -4,32 +4,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalhes do Plano</h2>
 
 <div>
-    <h4>Plano</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl>
         <dt>
-            @Html.DisplayNameFor(model => model.Nome_Plano)
+            @Html.DisplayName("Nome Plano")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Nome_Plano)
         </dd>
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.Valor_Plano)
+            @Html.DisplayName("Valor R$")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Valor_Plano)
         </dd>
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.Data_Cadastro_Plano)
+            @Html.DisplayName("Data Cadastro Plano")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Data_Cadastro_Plano)
         </dd>
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.Qtde_Max_Dispositivos_Plano)
+            @Html.DisplayName("Quantidade Máxima Dispositivos")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Qtde_Max_Dispositivos_Plano)
@@ -37,6 +39,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id_Plano">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-success">Voltar</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id_Plano" class="btn btn-info">Editar</a>
 </div>

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjetoCloud.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class UsuariosController : Controller
     {
         private readonly CloudContexto _context;

@@ -4,41 +4,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
-
-<h4>Dispositivo</h4>
+<h2>Editar Dispositivo</h2>
+<br />
 <hr />
 <div class="row">
-    <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id_Dispositivo" />
             <div class="form-group">
-                <label asp-for="Nome_Dispositivo" class="control-label"></label>
-                <input asp-for="Nome_Dispositivo" class="form-control" />
+                <b>@Html.DisplayName("Nome Dispositivo")</b>
+                <input asp-for="Nome_Dispositivo" class="form-control text-center" />
                 <span asp-validation-for="Nome_Dispositivo" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="Data_Cadastro_Dispositivo" class="control-label"></label>
-                <input asp-for="Data_Cadastro_Dispositivo" class="form-control" />
-                <span asp-validation-for="Data_Cadastro_Dispositivo" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="Status_Dispositivo" /> @Html.DisplayNameFor(model => model.Status_Dispositivo)
+                        <input asp-for="Status_Dispositivo" /> @Html.DisplayName("Status Dispositivo")
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <a asp-action="Index" class="btn btn-success">Voltar</a>
+                <input type="submit" value="Save" class="btn btn-info" />
             </div>
         </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

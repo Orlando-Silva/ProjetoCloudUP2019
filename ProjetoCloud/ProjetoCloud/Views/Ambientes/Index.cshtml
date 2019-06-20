@@ -1,26 +1,25 @@
 ﻿@model IEnumerable<DAL.Entidades.Ambiente>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Ambientes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h2>Ambientes</h2>
+<br />
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome_Ambiente)
+            <th class="text-center">
+                <b>@Html.DisplayName("Nome Ambiente")</b>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data_Cadastro_Ambiente)
+            <th class="text-center">
+                <b>@Html.DisplayName("Data Cadastro")</b>
+
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Qtda_Dispositivo_Ambiente)
+            <th class="text-center">
+                <b>@Html.DisplayName("Quantidade Dispositivos")</b>
+
             </th>
             <th></th>
         </tr>
@@ -28,21 +27,24 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            <td class="text-center">
                 @Html.DisplayFor(modelItem => item.Nome_Ambiente)
             </td>
-            <td>
+            <td class="text-center">
                 @Html.DisplayFor(modelItem => item.Data_Cadastro_Ambiente)
             </td>
-            <td>
+            <td class="text-center">
                 @Html.DisplayFor(modelItem => item.Qtda_Dispositivo_Ambiente)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id_Ambiente">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id_Ambiente">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id_Ambiente">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id_Ambiente">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id_Ambiente">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id_Ambiente">Apagar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+<p>
+    <a asp-action="Create" class="btn btn-info">Cadastrar Ambiente</a>
+</p>

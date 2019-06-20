@@ -1,48 +1,50 @@
 ﻿@model IEnumerable<DAL.Entidades.Dispositivo>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Dispositivos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<h2>Dispositivos</h2>
+<br />
+<table class="table text-left">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome_Dispositivo)
+            <th class="text-center">
+                @Html.DisplayName("Nome Dispositivo")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data_Cadastro_Dispositivo)
+            <th class="text-center">
+                @Html.DisplayName("Data Cadastro")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status_Dispositivo)
+            <th class="text-center">
+                @Html.DisplayName("Status Dispositivo")
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome_Dispositivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data_Cadastro_Dispositivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status_Dispositivo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id_Dispositivo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id_Dispositivo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id_Dispositivo">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Nome_Dispositivo)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Data_Cadastro_Dispositivo)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Status_Dispositivo)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id_Dispositivo">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id_Dispositivo">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id_Dispositivo">Apagar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<p>
+    <a asp-action="Create" class="btn btn-info">Cadastrar Dispositivo</a>
+</p>

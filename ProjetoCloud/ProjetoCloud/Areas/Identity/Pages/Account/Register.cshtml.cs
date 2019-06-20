@@ -18,6 +18,7 @@ using DAL.Entidades;
 using System.Security.Claims;
 using DAL.Contexto;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Usuario = DAL.Entidades.Usuario;
 
 namespace ProjetoCloud.Areas.Identity.Pages.Account
 {

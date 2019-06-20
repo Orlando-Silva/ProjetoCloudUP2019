@@ -1,43 +1,35 @@
 ﻿@model DAL.Entidades.Ambiente
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Ambiente";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Editar Ambiente</h2>
 
-<h4>Ambiente</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id_Ambiente" />
-            <div class="form-group">
-                <label asp-for="Nome_Ambiente" class="control-label"></label>
-                <input asp-for="Nome_Ambiente" class="form-control" />
-                <span asp-validation-for="Nome_Ambiente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Data_Cadastro_Ambiente" class="control-label"></label>
-                <input asp-for="Data_Cadastro_Ambiente" class="form-control" />
-                <span asp-validation-for="Data_Cadastro_Ambiente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Qtda_Dispositivo_Ambiente" class="control-label"></label>
-                <input asp-for="Qtda_Dispositivo_Ambiente" class="form-control" />
-                <span asp-validation-for="Qtda_Dispositivo_Ambiente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id_Ambiente" />
+        <div class="form-group">
+            <b>@Html.DisplayName("Nome Ambiente")</b>
+            <input asp-for="Nome_Ambiente" class="form-control text-center" />
+            <span asp-validation-for="Nome_Ambiente" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <b>@Html.DisplayName("Quantidade Dispositivos")</b>
+            <input asp-for="Qtda_Dispositivo_Ambiente" class="form-control text-center" />
+            <span asp-validation-for="Qtda_Dispositivo_Ambiente" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <a asp-action="Index" class="btn btn-success">Voltar</a> 
+            <input type="submit" value="Editar" class="btn btn-info" />
+        </div>
+    </form>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

@@ -14,7 +14,7 @@ namespace ProjetoCloud.Helpers
         {
             public AutoMapperProfiles()
             {
-                CreateMap<ProjetoCloud.Areas.Identity.Pages.Account.RegisterModel.InputModel, Usuario>();
+                CreateMap<ProjetoCloud.Areas.Identity.Pages.Account.RegisterModel.InputModel, DAL.Entidades.Usuario>();
             }
         }
     }

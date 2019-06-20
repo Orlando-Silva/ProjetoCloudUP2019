@@ -1,40 +1,42 @@
 ﻿@model DAL.Entidades.Ambiente
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Apagar Ambiente";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Apagar Ambiente</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem certeza que deseja apagar este Ambiente?</h3>
 <div>
-    <h4>Ambiente</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nome_Ambiente)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nome_Ambiente)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Data_Cadastro_Ambiente)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Data_Cadastro_Ambiente)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Qtda_Dispositivo_Ambiente)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Qtda_Dispositivo_Ambiente)
-        </dd>
-    </dl>
-    
+    <div>
+        <hr />
+        <dl>
+            <dt>
+                @Html.DisplayName("Nome Ambiente")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nome_Ambiente)
+            </dd>
+            <br />
+            <dt>
+                @Html.DisplayName("Data Cadastro")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Data_Cadastro_Ambiente)
+            </dd>
+            <br />
+            <dt>
+                @Html.DisplayName("Quantidade Dispositivos")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Qtda_Dispositivo_Ambiente)
+            </dd>
+        </dl>
+    </div>    
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id_Ambiente" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index" class="btn btn-success">Voltar</a> |
+        <input type="submit" value="Apagar" class="btn btn-danger" />
     </form>
 </div>

@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetoCloud.Models;
+using Plano = DAL.Entidades.Plano;
 
 namespace ProjetoCloud.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class PlanosController : Controller
     {
         private readonly CloudContexto _context;

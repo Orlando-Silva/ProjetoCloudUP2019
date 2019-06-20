@@ -12,7 +12,7 @@ using ProjetoCloud.Models;
 
 namespace ProjetoCloud.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AmbientesController : Controller
     {
         private readonly CloudContexto _context;
@@ -57,7 +57,7 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_Ambiente,Nome_Ambiente")] Ambiente ambiente)
+        public async Task<IActionResult> Create([Bind("Id_Ambiente,Nome_Ambiente")] DAL.Entidades.Ambiente ambiente)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_Ambiente,Nome_Ambiente,Qtda_Dispositivo_Ambiente")] Ambiente ambiente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_Ambiente,Nome_Ambiente,Qtda_Dispositivo_Ambiente")] DAL.Entidades.Ambiente ambiente)
         {
             if (id != ambiente.Id_Ambiente)
             {

@@ -1,30 +1,31 @@
 ﻿@model DAL.Entidades.Ambiente
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes Ambiente";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalhes Ambiente</h2>
 
 <div>
-    <h4>Ambiente</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl>
         <dt>
-            @Html.DisplayNameFor(model => model.Nome_Ambiente)
+            @Html.DisplayName("Nome Ambiente")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Nome_Ambiente)
         </dd>
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Data_Cadastro_Ambiente)
+        <br />
+        <dt>
+            @Html.DisplayName("Data Cadastro")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Data_Cadastro_Ambiente)
-        </dd>*@
+        </dd>
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.Qtda_Dispositivo_Ambiente)
+            @Html.DisplayName("Quantidade Dispositivos")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Qtda_Dispositivo_Ambiente)
@@ -32,6 +33,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id_Ambiente">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-success">Voltar</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id_Ambiente" class="btn btn-info">Editar</a> 
 </div>
