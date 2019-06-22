@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<DAL.Entidades.Usuario>
-
+@using Microsoft.AspNetCore.Identity
+@using ProjetoCloud.Areas.Identity.Data
+@inject SignInManager<ProjetoCloudUser> SignInManager
+@inject UserManager<ProjetoCloudUser> UserManager
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,33 +28,65 @@
             <th>
                 @Html.DisplayNameFor(model => model.CEP_Usuario)
             </th>
+            <th>
+                Administrador
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome_Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data_Cadastro_Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CPF_Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cartao_Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CEP_Usuario)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id_Usuario">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id_Usuario">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id_Usuario">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome_Usuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data_Cadastro_Usuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CPF_Usuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cartao_Usuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CEP_Usuario)
+                </td>
+                <td>
+                    @{
+                        var texto = "";
+
+                        var searchUser = UserManager.Users.FirstOrDefault(_ => _.UsuarioId == item.Id_Usuario);
+
+                        if (searchUser != null)
+                        {
+                            var usuario = UserManager.GetClaimsAsync(searchUser).Result;
+
+                            if (usuario != null)
+                            {
+                               
+                                texto =  usuario.Any(c => c.Value == "Administrator") ? "Sim" : "Não";
+                            }
+                            else
+                            {
+                                texto = "Não";
+                            }
+                        }
+                        else
+                        {
+                            texto = "Não";
+                        }
+
+                        <p> @texto </p>
+                    }
+                    </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id_Usuario">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id_Usuario">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id_Usuario">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

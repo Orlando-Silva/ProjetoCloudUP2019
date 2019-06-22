@@ -1,5 +1,8 @@
 ﻿@model DAL.Entidades.Usuario
-
+@using Microsoft.AspNetCore.Identity
+@using ProjetoCloud.Areas.Identity.Data
+@inject SignInManager<ProjetoCloudUser> SignInManager
+@inject UserManager<ProjetoCloudUser> UserManager
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,11 +22,6 @@
                 <input asp-for="Nome_Usuario" class="form-control" />
                 <span asp-validation-for="Nome_Usuario" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-            <label asp-for="Data_Cadastro_Usuario" class="control-label"></label>
-            <input asp-for="Data_Cadastro_Usuario" class="form-control" />
-            <span asp-validation-for="Data_Cadastro_Usuario" class="text-danger"></span>
-        </div>*@
             <div class="form-group">
                 <label asp-for="CPF_Usuario" class="control-label"></label>
                 <input asp-for="CPF_Usuario" class="form-control" />
@@ -38,6 +36,35 @@
                 <label asp-for="CEP_Usuario" class="control-label"></label>
                 <input asp-for="CEP_Usuario" class="form-control" />
                 <span asp-validation-for="CEP_Usuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @{
+                    bool admin = false;
+
+                    var searchUser = UserManager.Users.FirstOrDefault(_ => _.UsuarioId == Model.Id_Usuario);
+
+                    if (searchUser != null)
+                    {
+                        var usuario = UserManager.GetClaimsAsync(searchUser).Result;
+
+                        if (usuario != null)
+                        {
+
+                            admin = usuario.Any(c => c.Value == "Administrator");
+                        }
+                        else
+                        {
+                            admin = false;
+                        }
+                    }
+                    else
+                    {
+                        admin = false;
+
+                    }
+                    @Html.CheckBox("Admin",  admin);
+                }
+                <label>Administrador? </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

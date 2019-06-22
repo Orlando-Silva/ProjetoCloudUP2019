@@ -20,5 +20,6 @@ namespace DAL.Entidades
         public Plano Plano_Usuario { get; set; }
 
         public List<Ambiente> Ambientes_Usuario { get; set; }
+
     }
 }

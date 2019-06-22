@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DAL.Contexto;
 using DAL.Entidades;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProjetoCloud.Areas.Identity.Data;
 
 namespace ProjetoCloud.Controllers
 {
@@ -13,10 +17,12 @@ namespace ProjetoCloud.Controllers
     public class UsuariosController : Controller
     {
         private readonly CloudContexto _context;
+        private readonly UserManager<ProjetoCloudUser> _userManager;
 
-        public UsuariosController(CloudContexto context)
+        public UsuariosController(CloudContexto context, UserManager<ProjetoCloudUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Usuarios
@@ -97,6 +103,7 @@ namespace ProjetoCloud.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id_Usuario,Nome_Usuario,CPF_Usuario,Cartao_Usuario,CEP_Usuario,Email_Usuario,Senha_Usuario,Adm_Usuario")] Usuario usuario, bool Admin)
         {
+                
             if (id != usuario.Id_Usuario)
             {
                 return NotFound();
@@ -109,6 +116,30 @@ namespace ProjetoCloud.Controllers
                     usuario.Data_Cadastro_Usuario = DateTime.Now;
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
+
+                    var searchUser = _userManager.Users.FirstOrDefault(_ => _.UsuarioId == id);
+
+                    if (searchUser != null)
+                    {
+                        var usuarioClaims = _userManager.GetClaimsAsync(searchUser).Result;
+
+                        if (usuarioClaims != null)
+                        {
+                            var adminClaim = usuarioClaims.FirstOrDefault(c => c.Value == "Administrator");
+
+                            if(adminClaim is null && Admin)
+                            {
+                                await _userManager.AddClaimAsync(searchUser, new Claim(ClaimTypes.Role, "Administrator"));
+                            }
+                            else if(adminClaim != null && !Admin)
+                            {
+                                await _userManager.RemoveClaimAsync(searchUser, new Claim(ClaimTypes.Role, "Administrator"));
+                            }
+                            
+                        }
+                        
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -152,6 +183,30 @@ namespace ProjetoCloud.Controllers
             var usuario = await _context.Usuarios.FindAsync(id);
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
+
+
+            var searchUser = _userManager.Users.FirstOrDefault(_ => _.UsuarioId == id);
+
+            if (searchUser != null)
+            {
+                var usuarioClaims = _userManager.GetClaimsAsync(searchUser).Result;
+
+                if (usuarioClaims != null)
+                {
+                    var adminClaim = usuarioClaims.FirstOrDefault(c => c.Value == "Administrator");
+
+                    if (adminClaim != null)
+                    {
+                        await _userManager.RemoveClaimAsync(searchUser, new Claim(ClaimTypes.Role, "Administrator"));
+                    }
+
+                    await _userManager.DeleteAsync(searchUser);
+                }
+
+            }
+
+
+
             return RedirectToAction(nameof(Index));
         }
 
