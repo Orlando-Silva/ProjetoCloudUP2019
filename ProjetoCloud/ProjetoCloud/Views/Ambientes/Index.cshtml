@@ -19,13 +19,16 @@
             </th>
             <th class="text-center">
                 <b>@Html.DisplayName("Quantidade Dispositivos")</b>
-
+            </th>
+            <th class="text-center">
+                <b>@Html.DisplayName("Usuário do ambiente")</b>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td class="text-center">
                 @Html.DisplayFor(modelItem => item.Nome_Ambiente)
@@ -36,13 +39,16 @@
             <td class="text-center">
                 @Html.DisplayFor(modelItem => item.Qtda_Dispositivo_Ambiente)
             </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Usuario.Nome_Usuario)
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id_Ambiente">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id_Ambiente">Detalhes</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id_Ambiente">Apagar</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
 <p>

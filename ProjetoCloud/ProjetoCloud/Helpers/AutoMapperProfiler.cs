@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DAL.Entidades;
+using ProjetoCloud.DTO;
 using ProjetoCloud.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,9 @@ namespace ProjetoCloud.Helpers
             public AutoMapperProfiles()
             {
                 CreateMap<ProjetoCloud.Areas.Identity.Pages.Account.RegisterModel.InputModel, DAL.Entidades.Usuario>();
+                CreateMap<DispositivoDTO, Dispositivo>();
+                CreateMap<Dispositivo, DispositivoDTO>();
+
             }
         }
     }

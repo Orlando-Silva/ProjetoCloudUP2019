@@ -5,27 +5,33 @@ using System.Threading.Tasks;
 using DAL.Contexto;
 using DAL.Entidades;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ProjetoCloud.Areas.Identity.Data;
 using ProjetoCloud.Models;
 
 namespace ProjetoCloud.Controllers
 {
-    //[Authorize]
+
+    [Authorize]
     public class AmbientesController : Controller
     {
         private readonly CloudContexto _context;
+        private readonly UserManager<ProjetoCloudUser> _userManager;
 
-        public AmbientesController(CloudContexto context)
+
+        public AmbientesController(CloudContexto context, UserManager<ProjetoCloudUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Ambientes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Ambientes.ToListAsync());
+            return View(await _context.Ambientes.Include(a => a.Usuario).ToListAsync());
         }
 
         // GET: Ambientes/Details/5
@@ -61,9 +67,24 @@ namespace ProjetoCloud.Controllers
         {
             if (ModelState.IsValid)
             {
-                ambiente.Data_Cadastro_Ambiente = DateTime.Now;
-                ambiente.Qtda_Dispositivo_Ambiente = 0 ;
+                var nome_ambiente = "";
+                var cont = 0;
 
+                nome_ambiente = ambiente.Nome_Ambiente;
+
+                List<Dispositivo> dispositivos = _context.Dispositivos.Where(_ => _.Ambiente.Nome_Ambiente.Equals(nome_ambiente)).ToList();
+
+                foreach (var item in dispositivos)
+                {
+                    cont++;
+                }
+
+                var usuarioIdentity = await _userManager.GetUserAsync(User);
+                var usuario = _context.Usuarios.Find(usuarioIdentity.UsuarioId);
+                ambiente.Usuario = usuario;
+                ambiente.Qtda_Dispositivo_Ambiente = cont;
+                ambiente.Data_Cadastro_Ambiente = DateTime.Now;
+                
                 _context.Add(ambiente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -78,6 +99,9 @@ namespace ProjetoCloud.Controllers
             {
                 return NotFound();
             }
+
+            
+
 
             var ambiente = await _context.Ambientes.FindAsync(id);
             if (ambiente == null)
@@ -103,6 +127,7 @@ namespace ProjetoCloud.Controllers
             {
                 try
                 {
+                    ambiente.Qtda_Dispositivo_Ambiente = _context.Dispositivos.Where(_ => _.Ambiente.Nome_Ambiente.Equals(ambiente.Nome_Ambiente)).Count();
                     ambiente.Data_Cadastro_Ambiente = DateTime.Now;
                     _context.Update(ambiente);
                     await _context.SaveChangesAsync();
@@ -147,8 +172,27 @@ namespace ProjetoCloud.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var ambiente = await _context.Ambientes.FindAsync(id);
-            _context.Ambientes.Remove(ambiente);
-            await _context.SaveChangesAsync();
+            int id_ambiente = ambiente.Id_Ambiente;
+
+            if (ambiente.Qtda_Dispositivo_Ambiente < 1)
+            {
+                _context.Ambientes.Remove(ambiente);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                List<Dispositivo> dispositivos = _context.Dispositivos.Where(_ => _.Ambiente.Id_Ambiente == id_ambiente).ToList();
+
+                foreach (var item in dispositivos)
+                {
+                    _context.Dispositivos.Remove(item);
+                    await _context.SaveChangesAsync();
+                }
+                
+                _context.Ambientes.Remove(ambiente);
+                await _context.SaveChangesAsync();
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

@@ -1,42 +1,45 @@
 ﻿@model DAL.Entidades.Usuario
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes Usuário";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalhes Usuário</h2>
 
 <div>
-    <h4>Usuario</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl >
         <dt>
-            @Html.DisplayNameFor(model => model.Nome_Usuario)
+            @Html.DisplayName("Nome Usuário")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Nome_Usuario)
         </dd>
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.Data_Cadastro_Usuario)
+            @Html.DisplayName("Data Cadastro")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Data_Cadastro_Usuario)
         </dd>
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.CPF_Usuario)
+            @Html.DisplayName("CPF")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CPF_Usuario)
         </dd>
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.Cartao_Usuario)
+            @Html.DisplayName("Cartão")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Cartao_Usuario)
         </dd>
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.CEP_Usuario)
+            @Html.DisplayName("CEP")
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CEP_Usuario)
@@ -44,6 +47,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id_Usuario">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-success">Voltar</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id_Usuario" class="btn btn-info">Editar</a> 
 </div>

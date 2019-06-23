@@ -39,9 +39,14 @@
                     {
                         <li><a asp-area="" asp-controller="Usuarios" asp-action="Index">Usuários</a></li>
                     }
+
                     <li><a asp-area="" asp-controller="Planos" asp-action="Index">Planos</a></li>
-                    <li><a asp-area="" asp-controller="Ambientes" asp-action="Index">Ambientes</a></li>
-                    <li><a asp-area="" asp-controller="Dispositivos" asp-action="Index">Dispositivos</a></li>
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li><a asp-area="" asp-controller="Ambientes" asp-action="Index">Ambientes</a></li>
+                        <li><a asp-area="" asp-controller="Dispositivos" asp-action="Index">Dispositivos</a></li>
+                    }
                 </ul>
                 <partial name="_LoginPartial" />
             </div>

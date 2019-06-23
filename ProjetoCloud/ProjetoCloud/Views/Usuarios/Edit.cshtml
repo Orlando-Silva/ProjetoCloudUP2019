@@ -1,80 +1,77 @@
-﻿@model DAL.Entidades.Usuario
+﻿@model ProjetoCloud.ViewModels.ViewModelEditarUsuario
 @using Microsoft.AspNetCore.Identity
 @using ProjetoCloud.Areas.Identity.Data
 @inject SignInManager<ProjetoCloudUser> SignInManager
 @inject UserManager<ProjetoCloudUser> UserManager
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Usuário";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
-
-<h4>Usuario</h4>
+<h2>Editar Usuário</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id_Usuario" />
-            <div class="form-group">
-                <label asp-for="Nome_Usuario" class="control-label"></label>
-                <input asp-for="Nome_Usuario" class="form-control" />
-                <span asp-validation-for="Nome_Usuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CPF_Usuario" class="control-label"></label>
-                <input asp-for="CPF_Usuario" class="form-control" />
-                <span asp-validation-for="CPF_Usuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cartao_Usuario" class="control-label"></label>
-                <input asp-for="Cartao_Usuario" class="form-control" />
-                <span asp-validation-for="Cartao_Usuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CEP_Usuario" class="control-label"></label>
-                <input asp-for="CEP_Usuario" class="form-control" />
-                <span asp-validation-for="CEP_Usuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @{
-                    bool admin = false;
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Usuario.Id_Usuario" />
+        <div class="form-group text-center">
+            <b>@Html.DisplayName("Nome Usuário")</b>
+            <input asp-for="Usuario.Nome_Usuario" class="form-control text-center" />
+            <span asp-validation-for="Usuario.Nome_Usuario" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <b>@Html.DisplayName("CPF")</b>
+            <input asp-for="Usuario.CPF_Usuario" class="form-control text-center" />
+            <span asp-validation-for="Usuario.CPF_Usuario" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <b>@Html.DisplayName("Cartão")</b>
+            <input asp-for="Usuario.Cartao_Usuario" class="form-control text-center" />
+            <span asp-validation-for="Usuario.Cartao_Usuario" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <b>@Html.DisplayName("CEP")</b>
+            <input asp-for="Usuario.CEP_Usuario" class="form-control text-center" />
+            <span asp-validation-for="Usuario.CEP_Usuario" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <b>@Html.DisplayName("Plano do usuário")</b>
+            @Html.DropDownListFor(n => n.PlanoSelecionado, Model.Planos, new { @class = "form-control" })
+        </div>
+        <div class="form-group text-center">
+            @{
+                bool admin = false;
 
-                    var searchUser = UserManager.Users.FirstOrDefault(_ => _.UsuarioId == Model.Id_Usuario);
+                var searchUser = UserManager.Users.FirstOrDefault(_ => _.UsuarioId == Model.Usuario.Id_Usuario);
 
-                    if (searchUser != null)
+                if (searchUser != null)
+                {
+                    var usuario = UserManager.GetClaimsAsync(searchUser).Result;
+
+                    if (usuario != null)
                     {
-                        var usuario = UserManager.GetClaimsAsync(searchUser).Result;
 
-                        if (usuario != null)
-                        {
-
-                            admin = usuario.Any(c => c.Value == "Administrator");
-                        }
-                        else
-                        {
-                            admin = false;
-                        }
+                        admin = usuario.Any(c => c.Value == "Administrator");
                     }
                     else
                     {
                         admin = false;
-
                     }
-                    @Html.CheckBox("Admin",  admin);
                 }
-                <label>Administrador? </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
-</div>
+                else
+                {
+                    admin = false;
 
-<div>
-    <a asp-action="Index">Back to List</a>
+                }
+                @Html.CheckBox("Admin", admin);
+            }
+            <label>Administrador? </label>
+        </div>
+        <div class="form-group">
+            <a asp-action="Index" class="btn btn-success">Voltar</a>
+            <input type="submit" value="Atualizar" class="btn btn-info" />
+        </div>
+    </form>
 </div>
 
 @section Scripts {

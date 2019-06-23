@@ -1,4 +1,9 @@
-﻿@model IEnumerable<DAL.Entidades.Dispositivo>
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjetoCloud.Areas.Identity.Data
+@inject SignInManager<ProjetoCloudUser> SignInManager
+@inject UserManager<ProjetoCloudUser> UserManager
+
+@model IEnumerable<DAL.Entidades.Dispositivo>
 
 @{
     ViewData["Title"] = "Dispositivos";
@@ -19,28 +24,39 @@
             <th class="text-center">
                 @Html.DisplayName("Status Dispositivo")
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayName("Ambiente do dispositivo")
+            </th>
+            <th>
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Nome_Dispositivo)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Data_Cadastro_Dispositivo)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Status_Dispositivo)
-                </td>
+        <tr>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Nome_Dispositivo)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Data_Cadastro_Dispositivo)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Status_Dispositivo)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Ambiente.Nome_Ambiente)
+            </td>
+            @if (SignInManager.IsSignedIn(User))
+            {
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id_Dispositivo">Editar</a> |
                     <a asp-action="Details" asp-route-id="@item.Id_Dispositivo">Detalhes</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id_Dispositivo">Apagar</a>
                 </td>
-            </tr>
+            }
+
+        </tr>
         }
     </tbody>
 </table>

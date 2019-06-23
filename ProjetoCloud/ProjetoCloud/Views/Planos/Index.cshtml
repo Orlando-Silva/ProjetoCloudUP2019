@@ -1,4 +1,9 @@
-﻿@model IEnumerable<DAL.Entidades.Plano>
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjetoCloud.Areas.Identity.Data
+@inject SignInManager<ProjetoCloudUser> SignInManager
+@inject UserManager<ProjetoCloudUser> UserManager
+
+@model IEnumerable<DAL.Entidades.Plano>
 
 @{
     ViewData["Title"] = "Planos";
@@ -17,7 +22,7 @@
                 @Html.DisplayName("Valor")
             </th>
             <th class="text-center">
-                @Html.DisplayName("Data de Cadastro") 
+                @Html.DisplayName("Data de Cadastro")
             </th>
             <th class="text-center">
                 @Html.DisplayName("Quantidade Máxima Dispositivos")
@@ -26,7 +31,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td class="text-center">
                 <b>@Html.DisplayFor(modelItem => item.Nome_Plano)</b>
@@ -40,15 +46,24 @@
             <td class="text-center">
                 <b>@Html.DisplayFor(modelItem => item.Qtde_Max_Dispositivos_Plano)</b>
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id_Plano">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id_Plano">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id_Plano">Apagar</a>
-            </td>
-        </tr>
-}
+            @if (SignInManager.IsSignedIn(User) && User.HasClaim(c => c.Value == "Administrator"))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id_Plano">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id_Plano">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id_Plano">Apagar</a>
+                </td>
+            }
+            </tr>
+
+        }
     </tbody>
 </table>
-<p>
-    <a asp-action="Create" class="btn btn-info">Criar um novo Plano</a>
-</p>
+@if (SignInManager.IsSignedIn(User) && User.HasClaim(c => c.Value == "Administrator"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-info">Criar um novo Plano</a>
+    </p>
+}
+
+

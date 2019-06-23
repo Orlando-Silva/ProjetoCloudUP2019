@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetoCloud.Areas.Identity.Data;
+using ProjetoCloud.ViewModels;
 
 namespace ProjetoCloud.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class UsuariosController : Controller
     {
         private readonly CloudContexto _context;
@@ -30,7 +32,7 @@ namespace ProjetoCloud.Controllers
         {
             if( User.HasClaim(c => c.Value == "Administrator"))
             {
-                return View(await _context.Usuarios.ToListAsync());
+                return View(await _context.Usuarios.Include(i => i.Plano_Usuario).ToListAsync());
             }
             else
             {
@@ -93,7 +95,16 @@ namespace ProjetoCloud.Controllers
             {
                 return NotFound();
             }
-            return View(usuario);
+
+            var planos = await _context.Planos.ToListAsync();
+            var viewModel = new ViewModelEditarUsuario()
+            {
+                Usuario = usuario,
+                Planos = new SelectList(planos, "Id_Plano", "Nome_Plano"),
+                PlanoSelecionado = usuario.Plano_Usuario is null ? 0 : usuario.Plano_Usuario.Id_Plano
+            };
+
+            return View(viewModel);
         }
 
         // POST: Usuarios/Edit/5
@@ -101,7 +112,7 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_Usuario,Nome_Usuario,CPF_Usuario,Cartao_Usuario,CEP_Usuario,Email_Usuario,Senha_Usuario,Adm_Usuario")] Usuario usuario, bool Admin)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_Usuario,Nome_Usuario,CPF_Usuario,Cartao_Usuario,CEP_Usuario,Email_Usuario,Senha_Usuario,Adm_Usuario,Plano_Usuario")] Usuario usuario, bool Admin, int PlanoSelecionado)
         {
                 
             if (id != usuario.Id_Usuario)
@@ -114,6 +125,12 @@ namespace ProjetoCloud.Controllers
                 try
                 {
                     usuario.Data_Cadastro_Usuario = DateTime.Now;
+                    
+                    if(PlanoSelecionado > 0)
+                    {
+                        usuario.Plano_Usuario = _context.Planos.Find(PlanoSelecionado);
+                    }
+
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
 

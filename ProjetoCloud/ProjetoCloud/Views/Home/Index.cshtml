@@ -1,6 +1,19 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjetoCloud.Areas.Identity.Data
+@inject SignInManager<ProjetoCloudUser> SignInManager
+@inject UserManager<ProjetoCloudUser> UserManager
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<h2>Bem-vindo!</h2>
-<h3>Realize seu login e navegue pelo menu acima!</h3>
+@if (SignInManager.IsSignedIn(User))
+{
+    <h2>Bem-vindo <b>@User.Identity.Name</b>! </h2>
+    <h3>Navegue pelo menu acima!</h3>
+}
+else
+{
+    <h2>Bem-vindo!</h2>
+    <h3>Realize seu login e navegue pelo menu acima!</h3>
+    <h4> Esqueceu sua lâmpada acesa? <br> Não tem problema, controle seus dispositivos via Cloud.</h4>
+}

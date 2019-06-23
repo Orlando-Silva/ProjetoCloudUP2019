@@ -19,6 +19,7 @@ using System.Security.Claims;
 using DAL.Contexto;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Usuario = DAL.Entidades.Usuario;
+using System.Linq;
 
 namespace ProjetoCloud.Areas.Identity.Pages.Account
 {
@@ -103,6 +104,10 @@ namespace ProjetoCloud.Areas.Identity.Pages.Account
             [Display(Name = "Código de administrador")]
             public string CodigoAdministrador { get; set; }
 
+            [DataType(DataType.Text)]
+            [Display(Name = "Selecione seu plano")]
+            public Plano Plano_Usuario { get; set; }
+
         }
 
         public void OnGet(string returnUrl = null)
@@ -117,9 +122,18 @@ namespace ProjetoCloud.Areas.Identity.Pages.Account
             {
                 Usuario usuario = _mapper.Map(Input, new Usuario());
                 usuario.Data_Cadastro_Usuario = DateTime.UtcNow;
+              
+                var planos = _context.Planos.FirstOrDefault();
+
+                if (planos != null)
+                {
+                    usuario.Plano_Usuario = planos;
+                }
                 usuario = _context.Usuarios.Add(usuario).Entity;
                 _context.SaveChanges();
                 usuario = _context.Usuarios.Find(usuario.Id_Usuario);
+
+
 
                 var user = new ProjetoCloudUser { UserName = Input.Nome_Usuario, Email = Input.Email, UsuarioId  = usuario.Id_Usuario };
                 var result = await _userManager.CreateAsync(user, Input.Password);

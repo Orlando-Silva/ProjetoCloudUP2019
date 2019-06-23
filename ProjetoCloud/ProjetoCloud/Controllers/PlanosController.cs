@@ -13,7 +13,6 @@ using Plano = DAL.Entidades.Plano;
 
 namespace ProjetoCloud.Controllers
 {
-    //[Authorize]
     public class PlanosController : Controller
     {
         private readonly CloudContexto _context;
@@ -48,6 +47,7 @@ namespace ProjetoCloud.Controllers
         }
 
         // GET: Planos/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -58,6 +58,7 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id_Plano,Nome_Plano,Valor_Plano,Qtde_Max_Dispositivos_Plano")] Plano plano)
         {
             if (ModelState.IsValid)
@@ -71,6 +72,7 @@ namespace ProjetoCloud.Controllers
         }
 
         // GET: Planos/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -91,6 +93,7 @@ namespace ProjetoCloud.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id_Plano,Nome_Plano,Valor_Plano,Qtde_Max_Dispositivos_Plano")] Plano plano)
         {
             if (id != plano.Id_Plano)
@@ -123,6 +126,7 @@ namespace ProjetoCloud.Controllers
         }
 
         // GET: Planos/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -143,6 +147,7 @@ namespace ProjetoCloud.Controllers
         // POST: Planos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var plano = await _context.Planos.FindAsync(id);

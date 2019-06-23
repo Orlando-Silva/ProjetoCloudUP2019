@@ -13,22 +13,25 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome_Usuario)
+            <th class="text-center">
+                @Html.DisplayName("Nome Usuário")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data_Cadastro_Usuario)
+            <th class="text-center">
+                @Html.DisplayName("Data Cadastro")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CPF_Usuario)
+            <th class="text-center">
+                @Html.DisplayName("CPF")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cartao_Usuario)
+            <th class="text-center">
+                @Html.DisplayName("Cartão Crédito")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CEP_Usuario)
+            <th class="text-center">
+                @Html.DisplayName("CEP")
             </th>
-            <th>
+            <th class="text-center">
+                @Html.DisplayName("Plano")
+            </th>
+            <th class="text-center">
                 Administrador
             </th>
             <th></th>
@@ -37,56 +40,68 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome_Usuario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Data_Cadastro_Usuario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CPF_Usuario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cartao_Usuario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CEP_Usuario)
-                </td>
-                <td>
-                    @{
-                        var texto = "";
+        <tr>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Nome_Usuario)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Data_Cadastro_Usuario)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.CPF_Usuario)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Cartao_Usuario)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.CEP_Usuario)
+            </td>
+            <td class="text-center">
+                @{ 
+                    if(item.Plano_Usuario is null)
+                    {
+                        <p>Sem plano</p>
+                    }
+                    else
+                    {
+                        <p>@item.Plano_Usuario.Nome_Plano</p>
+                    }
+                }
+            </td>
+            <td class="text-center">
+                @{
+                    var texto = "";
 
-                        var searchUser = UserManager.Users.FirstOrDefault(_ => _.UsuarioId == item.Id_Usuario);
+                    var searchUser = UserManager.Users.FirstOrDefault(_ => _.UsuarioId == item.Id_Usuario);
 
-                        if (searchUser != null)
+                    if (searchUser != null)
+                    {
+                        var usuario = UserManager.GetClaimsAsync(searchUser).Result;
+
+                        if (usuario != null)
                         {
-                            var usuario = UserManager.GetClaimsAsync(searchUser).Result;
 
-                            if (usuario != null)
-                            {
-                               
-                                texto =  usuario.Any(c => c.Value == "Administrator") ? "Sim" : "Não";
-                            }
-                            else
-                            {
-                                texto = "Não";
-                            }
+                            texto = usuario.Any(c => c.Value == "Administrator") ? "Sim" : "Não";
                         }
                         else
                         {
                             texto = "Não";
                         }
-
-                        <p> @texto </p>
                     }
-                    </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id_Usuario">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id_Usuario">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id_Usuario">Delete</a>
-                </td>
-            </tr>
+                    else
+                    {
+                        texto = "Não";
+                    }
+
+                    <p> @texto </p>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id_Usuario">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id_Usuario">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id_Usuario">Apagar</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
